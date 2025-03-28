@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #fae249;
+  --color-secondary: #f36f44;
+  --color-dark: #131212;
+  --color-dark2: #2b2a2a;
+  --color-text: #fdfcfb;
+  --color-text2: #cacac9;
+  --text-small: 0.889rem;
+  --text-regular: 1rem;
+  --text-subheader: 1.602rem;
+  --text-header: 2.027rem;
+}
+
 @font-face {
   font-family: Satoshi-Regular;
   src: url("/src/assets/fonts/Satoshi-Regular.ttf") format("otf");
