@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: Satoshi-Regular;
+  src: url("/src/assets/fonts/Satoshi-Regular.ttf") format("otf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  font-family: "Satoshi", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+}
