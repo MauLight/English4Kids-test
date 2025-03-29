@@ -17,7 +17,7 @@ const containerVariants = {
 }
 
 const childVariants = {
-    initial: { left: -380 },
+    initial: { left: -480 },
     hover: { left: 0 },
     click: { opacity: 0 }
 }
@@ -32,7 +32,7 @@ export default function TeacherButton({ onClick }: { onClick: () => void }): Rea
                 whileHover='hover'
                 whileTap='click'
                 onClick={onClick}
-                className="relative group w-full rounded-full py-4 bg-primary hover:border-primary active:border-transparent border flex justify-between px-5 items-center text-black overflow-hidden cursor-pointer"
+                className="relative group w-full rounded-full py-4 bg-primary hover:border-primary active:border-transparent border flex justify-between px-5 items-center text-black overflow-hidden cursor-pointer z-10"
             >
                 <p className="text-regular group-hover:text-primary group-active:text-dark transition-color duration-200 ease-out z-20 font-semibold uppercase">Start</p>
                 <ChevronDoubleRightIcon className="w-6 h-6 z-20 group-hover:text-primary group-active:text-dark transition-color duration-200 ease-out" />

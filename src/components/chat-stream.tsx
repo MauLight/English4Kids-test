@@ -19,7 +19,7 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
         <div className="relative w-full h-full max-h-[550px]">
 
             <div className="w-full h-full bg-gray-200 border border-slate-200 rounded-[20px] overflow-y-scroll scrollbar-hide">
-                <div className="w-full h-auto flex flex-col gap-y-5 p-5">
+                <div className="w-full h-auto flex flex-col gap-y-5 p-2 sm:p-5">
                     {
                         chatStream && chatStream.length > 0 && chatStream.map((chat) => (
                             <motion.div
@@ -29,7 +29,7 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
                                 transition={{ duration: 0.2 }}
                                 className={`w-full flex items-center ${chat.user === 'teacher' ? 'justify-start' : 'justify-end'} gap-x-2 z-10`}
                             >
-                                <div className={`w-1/2 flex ${chat.user === 'teacher' ? 'justify-start' : 'justify-end'} gap-x-2`}>
+                                <div className={`w-full sm:w-1/2 flex ${chat.user === 'teacher' ? 'justify-start' : 'justify-end'} gap-x-2`}>
                                     {
                                         chat.user === 'teacher' ? (
                                             <>

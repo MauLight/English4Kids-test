@@ -151,18 +151,18 @@ export default function TeacherCard(): ReactNode {
                 animate={isChatOpen ? { scale: 1, width: '100%', maxWidth: 900, height: 800, backgroundColor: '#fdfcfb', border: '5px solid #10100e' } : { scale: 1, width: 'auto', maxWidth: 420, height: 300, backgroundColor: '#131212' }}
                 exit={{ scale: 0 }}
                 transition={{ duration: 0.5 }}
-                className="shadow-md shadow-black border h-[300px] border-b-border border-x-gray-700 rounded-[25px]">
+                className={`relative shadow-md shadow-black border h-[300px] max-[500px]:min-w-[90%] border-b-border border-x-gray-700 rounded-[25px] overflow-hidden ${!isChatOpen ? 'max-[500px]:mx-5' : ''}`}>
                 <motion.div
                     key={3}
                     initial={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 1.5 }}
-                    className="flex flex-col justify-between h-full items-center px-7 py-8"
+                    className={`flex flex-col justify-between h-full items-center ${isChatOpen ? 'px-2 sm:px-7' : 'px-7'} py-8`}
                 >
                     {/* Header */}
                     {
                         !isChatOpen && (
-                            <h1 className={`font-title text-start w-full text-text text-header`}>{text.first}</h1>
+                            <h1 className={`font-title text-start w-full text-text text-header z-10`}>{text.first}</h1>
                         )
                     }
 
@@ -199,6 +199,19 @@ export default function TeacherCard(): ReactNode {
                             )
                     }
                 </motion.div>
+                {
+                    !isChatOpen && (
+                        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 min-[500px]:hidden">
+                            <motion.img
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 0.5 }}
+                                className="min-w-[500px]"
+                                src="https://res.cloudinary.com/maulight/image/upload/v1743206725/dsnh1fjkctgoneeis60v.png"
+                                alt="avatar"
+                            />
+                        </div>
+                    )
+                }
             </motion.section>
         </AnimatePresence>
     )
