@@ -2,6 +2,7 @@ import { useEffect, useState, type ReactNode } from "react"
 import { AnimatePresence, motion } from 'motion/react'
 import { format } from "date-fns"
 import TeacherButton from "./teacher-button"
+import { MicrophoneIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline"
 
 const text = {
     first: 'Welcome!',
@@ -15,18 +16,27 @@ const text = {
 export default function TeacherCard(): ReactNode {
 
     const [isChatOpen, setIsChatOpen] = useState<boolean>(false)
+    const [isWriting, setIsWriting] = useState<boolean>(false)
+
+    const [userInput, setUserInput] = useState<string>('')
 
     function handleOpenChat() {
         setIsChatOpen(!isChatOpen)
     }
 
     useEffect(() => {
-        console.log(isChatOpen)
-    }, [isChatOpen])
+        if (!userInput.length && isWriting) {
+            setIsWriting(false)
+        }
+
+        if (userInput.length && !isWriting) {
+            setIsWriting(true)
+        }
+
+    }, [userInput])
 
     return (
         <AnimatePresence>
-
             <motion.section
                 key={1}
                 initial={{ scale: 1, width: 'auto', maxWidth: 420, height: 300, backgroundColor: '#131212', border: 0 }}
@@ -34,10 +44,6 @@ export default function TeacherCard(): ReactNode {
                 exit={{ scale: 0 }}
                 transition={{ duration: 0.5 }}
                 className="shadow-md shadow-black border h-[300px] border-b-border border-x-gray-700 rounded-[25px]">
-
-
-
-
                 <motion.div
                     key={3}
                     initial={{ opacity: 1 }}
@@ -89,19 +95,26 @@ export default function TeacherCard(): ReactNode {
                             :
                             (
 
-                                <div className="relative w-full">
-                                    <div className="absolute top-0 right-0 w-full h-full flex justify-end items-center px-[4px]">
-                                        <button className="bg-secondary w-[56px] h-[56px] rounded-full"></button>
-                                    </div>
-                                    <input type="text" className="w-full rounded-full py-5 px-6 bg-dark text-text outline-0" />
+                                <div className="relative w-full rounded-full py-5 px-6 bg-dark">
+
+                                    <button className="group absolute top-1 right-1 bg-secondary hover:bg-text transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer">
+                                        {
+                                            isWriting ? (
+                                                <PaperAirplaneIcon className="w-7 h-7 text-text group-hover:text-secondary transition-color duration-300 -rotate-45" />
+                                            )
+                                                :
+                                                (
+                                                    <MicrophoneIcon className="w-7 h-7 text-text group-hover:text-secondary transition-color duration-300" />
+                                                )
+                                        }
+                                    </button>
+
+                                    <input value={userInput} onChange={({ target }) => { setUserInput(target.value) }} type="text" className="w-full h-full text-text outline-0 z-20" />
                                 </div>
                             )
                     }
                 </motion.div>
-
             </motion.section>
-
-
         </AnimatePresence>
     )
 }
