@@ -1,9 +1,12 @@
-import { useEffect, useRef, useState, type ReactNode } from "react"
+import { KeyboardEvent, useEffect, useState, type ReactNode } from "react"
 import { AnimatePresence, motion } from 'motion/react'
+import { useDebouncedCallback } from 'use-debounce'
 import { format } from "date-fns"
-import { useDebounce } from 'use-debounce'
+import { v4 as uuid } from 'uuid'
+
+//* Components
 import TeacherButton from "./teacher-button"
-import { MicrophoneIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline"
+import ChatInput from "./chat-input"
 
 interface ChatStreamProps {
     id: string
@@ -14,7 +17,6 @@ interface ChatStreamProps {
 
 const teacherStream = [
     {
-        id: 't1',
         text: 'Hello student! Are you ready to start?',
         user: 'teacher'
     }
@@ -32,45 +34,74 @@ const text = {
 
 export default function TeacherCard(): ReactNode {
 
+    //* Transition between card and chat
     const [isChatOpen, setIsChatOpen] = useState<boolean>(false)
+    //* Transition between send message and record audio
     const [isWriting, setIsWriting] = useState<boolean>(false)
 
+    //* Input state
     const [userInput, setUserInput] = useState<string>('')
+    //* Teacher active state (writing or online)
     const [isTeacherWriting, setIsTeacherWriting] = useState<boolean>(false)
-    const [chatStream, setChatStream] = useState<ChatStreamProps[]>([])
-    const chatPositionRef = useRef(1)
 
+    //* Chat stream array
+    const [chatStream, setChatStream] = useState<ChatStreamProps[]>([])
+    //* Chat entries counter
+    const [chatPosition, setChatPosition] = useState<number>(1)
+
+    //* Method to open the chat
     function handleOpenChat() {
         setIsChatOpen(!isChatOpen)
     }
 
+    //* Method to debounce the teacher's reply by one second
+    const debouncedTeacherReply = useDebouncedCallback(() => {
+        console.log("Debounced callback triggered")
+    }, 1000)
+
+    //* Method to submit reply on enter keydown
+    function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+        if (e.key === 'Enter' && userInput.length > 0) {
+            handleInputButton()
+        }
+    }
+
+    //* Method to submit a new reply to the chat
     function handleInputButton() {
         if (isWriting) {
 
+            const id = uuid()
+
             const newChatEntry = {
-                id: `user-${chatPositionRef.current}`,
-                position: chatPositionRef.current,
+                id: `user-${id}`,
+                position: chatPosition,
                 text: userInput,
                 user: 'user'
             }
 
             setChatStream((prev) => [...prev, newChatEntry])
-            chatPositionRef.current = chatPositionRef.current + 1
+            setChatPosition((prev) => prev + 1)
             setUserInput('')
+            debouncedTeacherReply()
         }
     }
 
+    //* Submit the teacher's first message upon loading the chat
     useEffect(() => {
-        setTimeout(() => {
-            setIsTeacherWriting(true)
+        if (chatStream.length === 0) {
             setTimeout(() => {
-                setChatStream((prev) => [...prev, { ...teacherStream[0], position: chatPositionRef.current }])
-                chatPositionRef.current = chatPositionRef.current + 1
-                setIsTeacherWriting(false)
+                setIsTeacherWriting(true)
+                const id = uuid()
+                setTimeout(() => {
+                    setChatStream((prev) => [...prev, { ...teacherStream[0], id: `teacher-${id}`, position: chatPosition }])
+                    setChatPosition((prev) => prev + 1)
+                    setIsTeacherWriting(false)
+                }, 5000)
             }, 5000)
-        }, 5000)
+        }
     }, [])
 
+    //* Effect to manage conditional rendering of the action button, toggle between mic and send message
     useEffect(() => {
         if (!userInput.length && isWriting) {
             setIsWriting(false)
@@ -81,6 +112,10 @@ export default function TeacherCard(): ReactNode {
         }
 
     }, [userInput])
+
+    useEffect(() => {
+        console.log(chatStream)
+    }, [chatStream])
 
     return (
         <AnimatePresence>
@@ -197,23 +232,13 @@ export default function TeacherCard(): ReactNode {
                         )
                             :
                             (
-
-                                <div className="relative w-full rounded-full py-5 px-6 bg-dark">
-
-                                    <button onClick={handleInputButton} className="group absolute top-1 right-1 bg-secondary hover:bg-text transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer">
-                                        {
-                                            isWriting ? (
-                                                <PaperAirplaneIcon className="w-7 h-7 text-text group-hover:text-secondary transition-color duration-300 -rotate-45" />
-                                            )
-                                                :
-                                                (
-                                                    <MicrophoneIcon className="w-7 h-7 text-text group-hover:text-secondary transition-color duration-300" />
-                                                )
-                                        }
-                                    </button>
-
-                                    <input value={userInput} onChange={({ target }) => { setUserInput(target.value) }} type="text" className="w-full h-full text-text outline-0 z-20" />
-                                </div>
+                                <ChatInput
+                                    isWriting={isWriting}
+                                    userInput={userInput}
+                                    handleKeyDown={handleKeyDown}
+                                    handleInputButton={handleInputButton}
+                                    onChange={(e) => { setUserInput(e.target.value) }}
+                                />
                             )
                     }
                 </motion.div>
