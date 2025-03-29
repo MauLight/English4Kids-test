@@ -16,7 +16,19 @@ const teacherStream = [
     {
         text: 'Hello student! Are you ready to start?',
         user: 'teacher'
-    }
+    },
+    {
+        text: "That's the spirit! Today's lesson will be about professions",
+        user: 'teacher'
+    },
+    {
+        text: 'Hello student! Are you ready to start?',
+        user: 'teacher'
+    },
+    {
+        text: "That's the spirit! Today's lesson will be about professions",
+        user: 'teacher'
+    },
 ]
 
 const text = {
@@ -53,7 +65,24 @@ export default function TeacherCard(): ReactNode {
 
     //* Method to debounce the teacher's reply by one second
     const debouncedTeacherReply = useDebouncedCallback(() => {
-        console.log("Debounced callback triggered")
+        const teacherReplyCount = chatStream.filter((chat) => chat.user === 'teacher').length
+
+        const teacherReplyIndex = teacherReplyCount % teacherStream.length
+
+        if (teacherReplyCount > 0) {
+
+            setTimeout(() => {
+                setIsTeacherWriting(true)
+                const id = uuid()
+                setTimeout(() => {
+                    setChatStream((prev) => [...prev, { ...teacherStream[teacherReplyIndex], id: `teacher-${id}`, position: chatPosition }])
+                    setChatPosition((prev) => prev + 1)
+                    setIsTeacherWriting(false)
+                }, 5000)
+            }, 1500)
+
+        }
+
     }, 1000)
 
     //* Method to submit reply on enter keydown

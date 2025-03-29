@@ -17,10 +17,10 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
                             {
                                 chat.user === 'teacher' ? (
                                     <>
-                                        <div className="w-10 h-10 rounded-full overflow-hidden">
-                                            <img src="https://res.cloudinary.com/maulight/image/upload/v1743206725/dsnh1fjkctgoneeis60v.png" alt="" />
+                                        <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden">
+                                            <img className="w-full h-full object-cover" src="https://res.cloudinary.com/maulight/image/upload/v1743206725/dsnh1fjkctgoneeis60v.png" alt="avatar" />
                                         </div>
-                                        <div className="w-auto h-10 flex items-center justify-start px-4 border border-text2 rounded-[6px]">
+                                        <div className="w-auto flex items-center justify-start py-2 px-3 border border-text2 rounded-[6px]">
                                             <p>{chat.text}</p>
                                         </div>
                                     </>
@@ -28,10 +28,10 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
                                     :
                                     (
                                         <>
-                                            <div className="w-auto  h-10 flex items-center justify-start px-4 bg-dark text-text rounded-[6px]">
+                                            <div className="w-auto flex items-center justify-start py-2 px-3 bg-dark text-text rounded-[6px]">
                                                 <p>{chat.text}</p>
                                             </div>
-                                            <div className="w-10 h-10 rounded-full overflow-hidden">
+                                            <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden">
                                                 <img src="https://res.cloudinary.com/maulight/image/upload/v1743230917/cx3q6il3z0e77qq40etx.jpg" alt="" />
                                             </div>
                                         </>
