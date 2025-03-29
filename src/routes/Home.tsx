@@ -2,7 +2,7 @@ import TeacherCard from "../components/teacher-card"
 
 function Home() {
     return (
-        <div className="relative w-full h-screen flex justify-center items-center bg-primary px-5">
+        <div className="relative w-full h-screen flex flex-col gap-y-5 justify-center items-center bg-primary px-5">
             <TeacherCard />
         </div>
     )
