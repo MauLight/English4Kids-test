@@ -3,7 +3,7 @@ import { motion } from "motion/react"
 import { format } from "date-fns"
 
 interface TeacherInformationProps {
-    text: any
+    text: Record<string, string>
     isChatOpen: boolean
     isTeacherWriting: boolean
 }

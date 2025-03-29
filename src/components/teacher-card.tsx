@@ -1,19 +1,16 @@
 import { KeyboardEvent, useEffect, useState, type ReactNode } from "react"
 import { AnimatePresence, motion } from 'motion/react'
 import { useDebouncedCallback } from 'use-debounce'
-import { format } from "date-fns"
 import { v4 as uuid } from 'uuid'
 
 //* Components
 import TeacherButton from "./teacher-button"
 import ChatInput from "./chat-input"
+import TeacherInformation from "./teacher-information"
 
-interface ChatStreamProps {
-    id: string
-    position: number
-    text: string
-    user: string
-}
+//* Types
+import { ChatStreamProps } from "@/types"
+import ChatStream from "./chat-stream"
 
 const teacherStream = [
     {
@@ -141,87 +138,18 @@ export default function TeacherCard(): ReactNode {
                     }
 
                     {/* Body */}
-                    <div className={`w-full grid ${isChatOpen ? 'grid-cols-9' : 'grid-cols-4'} gap-x-5`}>
-                        <div className="col-span-1">
-                            <motion.img
-                                initial={{ width: 'auto' }}
-                                animate={isChatOpen ? { width: '60px' } : { width: 'auto' }}
-                                className="rounded-full"
-                                src="https://res.cloudinary.com/maulight/image/upload/v1743206725/dsnh1fjkctgoneeis60v.png"
-                                alt="avatar"
-                            />
-                        </div>
-                        <div className="col-span-3 flex flex-col gap-y-2">
-                            <p className={`${isChatOpen ? 'text-dark' : 'text-text'} text-[1.4rem] leading-5`}>{text.second}</p>
-                            {
-                                isChatOpen ? (
-                                    <div className="flex gap-x-2 items-center">
-                                        {
-                                            isTeacherWriting ? (
-                                                <>
-                                                    <p className="text-dark2 text-regular animate-pulse">{`${text.fifth}`}</p>
-                                                </>
-                                            )
-                                                :
-                                                (
-                                                    <>
-                                                        <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                                                        <p className="text-green-500 text-regular">{`${text.fourth}`}</p>
-                                                    </>
-                                                )
-                                        }
-                                    </div>
-                                )
-                                    :
-                                    (
-                                        <p className="text-gray-400 text-regular">{`${text.third} ${format(Date.now(), 'p')}`}</p>
-                                    )
-                            }
-                        </div>
 
-                    </div>
+                    <TeacherInformation
+                        text={text}
+                        isChatOpen={isChatOpen}
+                        isTeacherWriting={isTeacherWriting}
+                    />
 
                     {
                         isChatOpen && (
-                            <div className="w-full h-full flex flex-col gap-y-5 py-10 px-5">
-                                {
-                                    chatStream && chatStream.length > 0 && chatStream.map((chat) => (
-                                        <motion.div
-                                            key={chat.id}
-                                            initial={{ opacity: 0, y: 30 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ duration: 0.2 }}
-                                            className={`w-full flex items-center ${chat.user === 'teacher' ? 'justify-start' : 'justify-end'} gap-x-2`}
-                                        >
-                                            <div className={`w-1/2 flex ${chat.user === 'teacher' ? 'justify-start' : 'justify-end'} gap-x-2`}>
-                                                {
-                                                    chat.user === 'teacher' ? (
-                                                        <>
-                                                            <div className="w-10 h-10 rounded-full overflow-hidden">
-                                                                <img src="https://res.cloudinary.com/maulight/image/upload/v1743206725/dsnh1fjkctgoneeis60v.png" alt="" />
-                                                            </div>
-                                                            <div className="w-auto h-10 flex items-center justify-start px-4 border border-text2 rounded-[6px]">
-                                                                <p>{chat.text}</p>
-                                                            </div>
-                                                        </>
-                                                    )
-                                                        :
-                                                        (
-                                                            <>
-                                                                <div className="w-auto  h-10 flex items-center justify-start px-4 bg-dark text-text rounded-[6px]">
-                                                                    <p>{chat.text}</p>
-                                                                </div>
-                                                                <div className="w-10 h-10 rounded-full overflow-hidden">
-                                                                    <img src="https://res.cloudinary.com/maulight/image/upload/v1743230917/cx3q6il3z0e77qq40etx.jpg" alt="" />
-                                                                </div>
-                                                            </>
-                                                        )
-                                                }
-                                            </div>
-                                        </motion.div>
-                                    ))
-                                }
-                            </div>
+                            <ChatStream
+                                chatStream={chatStream}
+                            />
                         )
                     }
 
