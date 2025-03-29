@@ -1,14 +1,30 @@
-import { useEffect, useState, type ReactNode } from "react"
+import { useEffect, useRef, useState, type ReactNode } from "react"
 import { AnimatePresence, motion } from 'motion/react'
 import { format } from "date-fns"
 import TeacherButton from "./teacher-button"
 import { MicrophoneIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline"
 
+interface ChatStreamProps {
+    id: string
+    position: number
+    text: string
+    user: string
+}
+
+const teacherStream = [
+    {
+        id: 't1',
+        text: 'Hello student! Are you ready to start?',
+        user: 'teacher'
+    }
+]
+
 const text = {
     first: 'Welcome!',
     second: 'Coach Isabella',
     third: 'Today ',
-    fourth: 'online'
+    fourth: 'online',
+    fifth: 'writing...'
 
 }
 
@@ -19,10 +35,24 @@ export default function TeacherCard(): ReactNode {
     const [isWriting, setIsWriting] = useState<boolean>(false)
 
     const [userInput, setUserInput] = useState<string>('')
+    const [isTeacherWriting, setIsTeacherWriting] = useState<boolean>(false)
+    const [chatStream, setChatStream] = useState<ChatStreamProps[] | null>(null)
+    const chatPositionRef = useRef(1)
 
     function handleOpenChat() {
         setIsChatOpen(!isChatOpen)
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsTeacherWriting(true)
+            setTimeout(() => {
+                setChatStream([{ ...teacherStream[0], position: chatPositionRef.current }])
+                chatPositionRef.current = chatPositionRef.current + 1
+                setIsTeacherWriting(false)
+            }, 5000)
+        }, 5000)
+    }, [])
 
     useEffect(() => {
         if (!userInput.length && isWriting) {
@@ -74,8 +104,20 @@ export default function TeacherCard(): ReactNode {
                             {
                                 isChatOpen ? (
                                     <div className="flex gap-x-2 items-center">
-                                        <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                                        <p className="text-green-500 text-regular">{`${text.fourth}`}</p>
+                                        {
+                                            isTeacherWriting ? (
+                                                <>
+                                                    <p className="text-dark2 text-regular animate-pulse">{`${text.fifth}`}</p>
+                                                </>
+                                            )
+                                                :
+                                                (
+                                                    <>
+                                                        <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                                                        <p className="text-green-500 text-regular">{`${text.fourth}`}</p>
+                                                    </>
+                                                )
+                                        }
                                     </div>
                                 )
                                     :
@@ -86,6 +128,33 @@ export default function TeacherCard(): ReactNode {
                         </div>
 
                     </div>
+
+                    {
+                        isChatOpen && (
+                            <div className="w-full h-full py-10 px-5">
+                                {
+                                    chatStream && chatStream.length > 0 && chatStream.map((chat) => (
+                                        <motion.div
+                                            key={chat.id}
+                                            initial={{ opacity: 0, y: 30 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 0.2 }}
+                                            className={`w-full flex items-center ${chat.user === 'teacher' ? 'justify-start' : 'justify-end'} gap-x-2`}
+                                        >
+                                            <div className="w-1/2 flex gap-x-2">
+                                                <div className="w-10 h-10 rounded-full overflow-hidden">
+                                                    <img src="https://res.cloudinary.com/maulight/image/upload/v1743206725/dsnh1fjkctgoneeis60v.png" alt="" />
+                                                </div>
+                                                <div className="w-auto h-10 flex items-center justify-start px-4 border border-text2 rounded-[6px]">
+                                                    <p>{chat.text}</p>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    ))
+                                }
+                            </div>
+                        )
+                    }
 
                     {/* Button */}
                     {
