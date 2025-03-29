@@ -16,7 +16,7 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
     }, [chatStream])
 
     return (
-        <div className="w-full h-full max-h-[550px] bg-slate-50 border border-slate-200 rounded-[20px] overflow-y-scroll scrollbar-hide">
+        <div className="w-full h-full max-h-[550px] bg-gray-200 border border-slate-200 rounded-[20px] overflow-y-scroll scrollbar-hide">
             <div className="w-full h-auto flex flex-col gap-y-5 p-5">
                 {
                     chatStream && chatStream.length > 0 && chatStream.map((chat) => (
@@ -34,7 +34,7 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
                                             <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden">
                                                 <img className="w-full h-full object-cover" src="https://res.cloudinary.com/maulight/image/upload/v1743206725/dsnh1fjkctgoneeis60v.png" alt="avatar" />
                                             </div>
-                                            <div className="w-auto flex items-center justify-start bg-text py-2 px-3 border border-gray-300 rounded-[6px]">
+                                            <div className="w-auto flex items-center justify-start bg-text py-2 px-3 border border-gray-300 shadow-md shadow-gray-300 rounded-[6px]">
                                                 <p>{chat.text}</p>
                                             </div>
                                         </>
@@ -42,7 +42,7 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
                                         :
                                         (
                                             <>
-                                                <div className="w-auto flex items-center justify-start py-2 px-3 bg-dark text-text rounded-[6px]">
+                                                <div className="w-auto flex items-center justify-start py-2 px-3 bg-dark text-text shadow-md shadow-gray-400 rounded-[6px]">
                                                     <p>{chat.text}</p>
                                                 </div>
                                                 <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden">
