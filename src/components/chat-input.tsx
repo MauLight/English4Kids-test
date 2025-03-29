@@ -32,7 +32,7 @@ export default function ChatInput({
                 }
             </button>
 
-            <input onKeyDown={(e) => { handleKeyDown(e) }} value={userInput} onChange={onChange} type="text" className="w-full h-full text-text outline-0 z-20" />
+            <input placeholder='Write a message...' onKeyDown={(e) => { handleKeyDown(e) }} value={userInput} onChange={onChange} type="text" className="w-full h-full text-text outline-0 z-20" />
         </div>
     )
 }
