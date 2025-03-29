@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import { AnimatePresence, motion } from 'motion/react'
 import { format } from "date-fns"
+import { useDebounce } from 'use-debounce'
 import TeacherButton from "./teacher-button"
 import { MicrophoneIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline"
 
@@ -36,18 +37,34 @@ export default function TeacherCard(): ReactNode {
 
     const [userInput, setUserInput] = useState<string>('')
     const [isTeacherWriting, setIsTeacherWriting] = useState<boolean>(false)
-    const [chatStream, setChatStream] = useState<ChatStreamProps[] | null>(null)
+    const [chatStream, setChatStream] = useState<ChatStreamProps[]>([])
     const chatPositionRef = useRef(1)
 
     function handleOpenChat() {
         setIsChatOpen(!isChatOpen)
     }
 
+    function handleInputButton() {
+        if (isWriting) {
+
+            const newChatEntry = {
+                id: `user-${chatPositionRef.current}`,
+                position: chatPositionRef.current,
+                text: userInput,
+                user: 'user'
+            }
+
+            setChatStream((prev) => [...prev, newChatEntry])
+            chatPositionRef.current = chatPositionRef.current + 1
+            setUserInput('')
+        }
+    }
+
     useEffect(() => {
         setTimeout(() => {
             setIsTeacherWriting(true)
             setTimeout(() => {
-                setChatStream([{ ...teacherStream[0], position: chatPositionRef.current }])
+                setChatStream((prev) => [...prev, { ...teacherStream[0], position: chatPositionRef.current }])
                 chatPositionRef.current = chatPositionRef.current + 1
                 setIsTeacherWriting(false)
             }, 5000)
@@ -131,7 +148,7 @@ export default function TeacherCard(): ReactNode {
 
                     {
                         isChatOpen && (
-                            <div className="w-full h-full py-10 px-5">
+                            <div className="w-full h-full flex flex-col gap-y-5 py-10 px-5">
                                 {
                                     chatStream && chatStream.length > 0 && chatStream.map((chat) => (
                                         <motion.div
@@ -141,13 +158,30 @@ export default function TeacherCard(): ReactNode {
                                             transition={{ duration: 0.2 }}
                                             className={`w-full flex items-center ${chat.user === 'teacher' ? 'justify-start' : 'justify-end'} gap-x-2`}
                                         >
-                                            <div className="w-1/2 flex gap-x-2">
-                                                <div className="w-10 h-10 rounded-full overflow-hidden">
-                                                    <img src="https://res.cloudinary.com/maulight/image/upload/v1743206725/dsnh1fjkctgoneeis60v.png" alt="" />
-                                                </div>
-                                                <div className="w-auto h-10 flex items-center justify-start px-4 border border-text2 rounded-[6px]">
-                                                    <p>{chat.text}</p>
-                                                </div>
+                                            <div className={`w-1/2 flex ${chat.user === 'teacher' ? 'justify-start' : 'justify-end'} gap-x-2`}>
+                                                {
+                                                    chat.user === 'teacher' ? (
+                                                        <>
+                                                            <div className="w-10 h-10 rounded-full overflow-hidden">
+                                                                <img src="https://res.cloudinary.com/maulight/image/upload/v1743206725/dsnh1fjkctgoneeis60v.png" alt="" />
+                                                            </div>
+                                                            <div className="w-auto h-10 flex items-center justify-start px-4 border border-text2 rounded-[6px]">
+                                                                <p>{chat.text}</p>
+                                                            </div>
+                                                        </>
+                                                    )
+                                                        :
+                                                        (
+                                                            <>
+                                                                <div className="w-auto  h-10 flex items-center justify-start px-4 bg-dark text-text rounded-[6px]">
+                                                                    <p>{chat.text}</p>
+                                                                </div>
+                                                                <div className="w-10 h-10 rounded-full overflow-hidden">
+                                                                    <img src="https://res.cloudinary.com/maulight/image/upload/v1743230917/cx3q6il3z0e77qq40etx.jpg" alt="" />
+                                                                </div>
+                                                            </>
+                                                        )
+                                                }
                                             </div>
                                         </motion.div>
                                     ))
@@ -166,7 +200,7 @@ export default function TeacherCard(): ReactNode {
 
                                 <div className="relative w-full rounded-full py-5 px-6 bg-dark">
 
-                                    <button className="group absolute top-1 right-1 bg-secondary hover:bg-text transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer">
+                                    <button onClick={handleInputButton} className="group absolute top-1 right-1 bg-secondary hover:bg-text transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer">
                                         {
                                             isWriting ? (
                                                 <PaperAirplaneIcon className="w-7 h-7 text-text group-hover:text-secondary transition-color duration-300 -rotate-45" />
