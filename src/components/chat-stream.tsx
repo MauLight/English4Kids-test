@@ -16,47 +16,57 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
     }, [chatStream])
 
     return (
-        <div className="w-full h-full max-h-[550px] bg-gray-200 border border-slate-200 rounded-[20px] overflow-y-scroll scrollbar-hide">
-            <div className="w-full h-auto flex flex-col gap-y-5 p-5">
-                {
-                    chatStream && chatStream.length > 0 && chatStream.map((chat) => (
-                        <motion.div
-                            key={chat.id}
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className={`w-full flex items-center ${chat.user === 'teacher' ? 'justify-start' : 'justify-end'} gap-x-2`}
-                        >
-                            <div className={`w-1/2 flex ${chat.user === 'teacher' ? 'justify-start' : 'justify-end'} gap-x-2`}>
-                                {
-                                    chat.user === 'teacher' ? (
-                                        <>
-                                            <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden">
-                                                <img className="w-full h-full object-cover" src="https://res.cloudinary.com/maulight/image/upload/v1743206725/dsnh1fjkctgoneeis60v.png" alt="avatar" />
-                                            </div>
-                                            <div className="w-auto flex items-center justify-start bg-text py-2 px-3 border border-gray-300 shadow-md shadow-gray-300 rounded-[6px]">
-                                                <p>{chat.text}</p>
-                                            </div>
-                                        </>
-                                    )
-                                        :
-                                        (
+        <div className="relative w-full h-full max-h-[550px]">
+
+            <div className="w-full h-full bg-gray-200 border border-slate-200 rounded-[20px] overflow-y-scroll scrollbar-hide">
+                <div className="w-full h-auto flex flex-col gap-y-5 p-5">
+                    {
+                        chatStream && chatStream.length > 0 && chatStream.map((chat) => (
+                            <motion.div
+                                key={chat.id}
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.2 }}
+                                className={`w-full flex items-center ${chat.user === 'teacher' ? 'justify-start' : 'justify-end'} gap-x-2 z-10`}
+                            >
+                                <div className={`w-1/2 flex ${chat.user === 'teacher' ? 'justify-start' : 'justify-end'} gap-x-2`}>
+                                    {
+                                        chat.user === 'teacher' ? (
                                             <>
-                                                <div className="w-auto flex items-center justify-start py-2 px-3 bg-dark text-text shadow-md shadow-gray-400 rounded-[6px]">
-                                                    <p>{chat.text}</p>
-                                                </div>
                                                 <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden">
-                                                    <img src="https://res.cloudinary.com/maulight/image/upload/v1743230917/cx3q6il3z0e77qq40etx.jpg" alt="" />
+                                                    <img className="w-full h-full object-cover" src="https://res.cloudinary.com/maulight/image/upload/v1743206725/dsnh1fjkctgoneeis60v.png" alt="avatar" />
+                                                </div>
+                                                <div className="w-auto flex items-center justify-start bg-text py-2 px-3 border border-gray-300 shadow-md shadow-gray-300 rounded-[6px]">
+                                                    <p>{chat.text}</p>
                                                 </div>
                                             </>
                                         )
-                                }
-                                <div ref={scrollRef}></div>
-                            </div>
-                        </motion.div>
-                    ))
-                }
+                                            :
+                                            (
+                                                <>
+                                                    <div className="w-auto flex items-center justify-start py-2 px-3 bg-dark text-text shadow-md shadow-gray-400 rounded-[6px]">
+                                                        <p>{chat.text}</p>
+                                                    </div>
+                                                    <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden">
+                                                        <img src="https://res.cloudinary.com/maulight/image/upload/v1743230917/cx3q6il3z0e77qq40etx.jpg" alt="" />
+                                                    </div>
+                                                </>
+                                            )
+                                    }
+                                    <div ref={scrollRef}></div>
+                                </div>
+                            </motion.div>
+                        ))
+                    }
+                </div>
             </div>
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.15 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="absolute top-0 left-0 w-full h-full z-0">
+                <img className="w-full h-full object-cover" src="https://res.cloudinary.com/maulight/image/upload/v1743239914/ffzeshx0mahdbgg4x5c0.png" alt="" />
+            </motion.div>
         </div>
     )
 }

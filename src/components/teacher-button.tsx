@@ -39,7 +39,16 @@ export default function TeacherButton({ onClick }: { onClick: () => void }): Rea
                 <motion.div
                     className='w-full h-full absolute top-0 left-0 bg-dark rounded-full'
                     variants={childVariants}
-                ></motion.div>
+                >
+
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 0.2 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-0 left-0 w-full h-full z-0">
+                        <img style={{ filter: 'invert(100%)' }} className="w-full h-full object-cover" src="https://res.cloudinary.com/maulight/image/upload/v1743239914/ffzeshx0mahdbgg4x5c0.png" alt="" />
+                    </motion.div>
+                </motion.div>
             </motion.div>
         </AnimatePresence>
     )
