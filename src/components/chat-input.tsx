@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useRef, useState } from 'react'
 import { motion } from 'motion/react'
-import { PaperAirplaneIcon, MicrophoneIcon, StopIcon, XMarkIcon } from '@heroicons/react/16/solid'
+import { PaperAirplaneIcon, MicrophoneIcon, StopIcon, XMarkIcon, CloudArrowUpIcon } from '@heroicons/react/16/solid'
 
 
 interface ChatInputProps {
@@ -104,6 +104,11 @@ export default function ChatInput({
         }
     }
 
+    function handleSendAudio() {
+        handleAddMessage()
+        setAudioUrl(null)
+    }
+
     return (
         <div className='relative w-full'>
 
@@ -113,7 +118,10 @@ export default function ChatInput({
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, type: 'spring', bounce: 0.2 }}
-                        className="absolute -top-17 right-0 z-20 w-full py-3 flex justify-end">
+                        className="absolute -top-17 right-0 z-20 py-3 flex justify-end">
+                        <button onClick={handleSendAudio} className='absolute top-3 -left-15 z-30 h-10 px-4 bg-gray-100 hover:bg-green-500 transition-color duration-300 border border-gray-300 rounded-full'>
+                            <CloudArrowUpIcon className='w-5 h-5 text-dark' />
+                        </button>
                         <button onClick={() => { setAudioUrl(null) }} className='absolute top-1 -right-1 z-30'>
                             <XMarkIcon className='w-5 h-5 text-dark hover:text-red-500' />
                         </button>
