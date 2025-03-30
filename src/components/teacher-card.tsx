@@ -12,6 +12,7 @@ import TeacherInformation from "./teacher-information"
 import { ChatStreamProps } from "@/types"
 import ChatStream from "./chat-stream"
 import { XMarkIcon } from "@heroicons/react/16/solid"
+import { useTheme } from "../context/themeContext"
 
 const teacherStream = [
     {
@@ -43,6 +44,8 @@ const text = {
 
 
 export default function TeacherCard(): ReactNode {
+
+    const { theme } = useTheme()
 
     //* Transition between card and chat
     const [isChatOpen, setIsChatOpen] = useState<boolean>(false)
@@ -162,11 +165,11 @@ export default function TeacherCard(): ReactNode {
         <AnimatePresence>
             <motion.section
                 key={1}
-                initial={{ scale: 1, width: 'auto', maxWidth: 420, height: 300, backgroundColor: '#131212', border: 0 }}
-                animate={isChatOpen ? { scale: 1, width: '100%', maxWidth: 900, height: 800, backgroundColor: '#fdfcfb' } : { scale: 1, width: 'auto', maxWidth: 420, height: 300, backgroundColor: '#131212' }}
+                initial={{ scale: 1, width: 'auto', maxWidth: 420, height: 300, backgroundColor: '#131212' }}
+                animate={isChatOpen ? { scale: 1, width: '100%', maxWidth: 900, height: 800, backgroundColor: `${theme === 'light' ? '#fdfcfb' : '#080808'}`, border: `${theme === 'light' ? 'none' : '1px solid #292929'}` } : { scale: 1, width: 'auto', maxWidth: 420, height: 300, backgroundColor: `${theme === 'light' ? '#131212' : '#080808'}`, border: `${theme === 'light' ? 'none' : '1px solid #292929'}` }}
                 exit={{ scale: 0 }}
                 transition={{ duration: 0.3 }}
-                className={`relative shadow-xl shadow-yellow-400 border h-[300px] max-[500px]:min-w-[90%] border-b-border border-x-gray-700 ${isChatOpen ? 'rounded-[42px]' : 'rounded-[25px]'} overflow-hidden ${!isChatOpen ? 'max-[500px]:mx-5' : ''}`}>
+                className={`relative h-[300px] max-[500px]:min-w-[90%] ${isChatOpen ? 'rounded-[42px]' : 'rounded-[25px]'} overflow-hidden ${!isChatOpen ? 'max-[500px]:mx-5' : ''} ${theme === 'light' ? 'shadow-xl shadow-yellow-400 border border-b-border border-x-gray-700' : ''}`}>
                 <motion.div
                     key={3}
                     initial={{ opacity: 1 }}
@@ -185,7 +188,7 @@ export default function TeacherCard(): ReactNode {
                     {/* Header */}
                     {
                         !isChatOpen && (
-                            <h1 className={`font-title text-start w-full text-text text-header z-10`}>{text.first}</h1>
+                            <h1 className={`font-title text-start w-full min-[360px]:min-w-[360px] text-text text-header z-10`}>{text.first}</h1>
                         )
                     }
 
