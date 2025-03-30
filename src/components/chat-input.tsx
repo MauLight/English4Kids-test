@@ -42,21 +42,9 @@ export default function ChatInput({
                 setPermission(true)
                 setStream(streamData)
 
-            } catch (error) {
-                console.error(error)
-            }
-        } else {
-            console.error('The MediaRecorder API is not supported in your browser.')
-        }
-    }
 
-    function startRecording() {
-        if (!permission) {
-            handleGetMicPermission()
-
-            if (stream) {
                 setRecordingStatus('recording')
-                const media = new MediaRecorder(stream, { mimeType: 'audio/webm' })
+                const media = new MediaRecorder(streamData, { mimeType: 'audio/webm' })
                 mediaRecorder.current = media
 
                 //* Start recording
@@ -68,8 +56,19 @@ export default function ChatInput({
                     localAudioChunks.push(e.data)
                 }
                 setAudioChunks(localAudioChunks)
-            }
 
+
+            } catch (error) {
+                console.error(error)
+            }
+        } else {
+            console.error('The MediaRecorder API is not supported in your browser.')
+        }
+    }
+
+    function startRecording() {
+        if (!permission) {
+            handleGetMicPermission()
         } else {
             if (stream) {
                 setRecordingStatus('recording')

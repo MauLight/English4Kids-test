@@ -32,7 +32,7 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
                                 <div className={`w-full sm:w-1/2 flex ${chat.user === 'teacher' ? 'justify-start' : 'justify-end'} gap-x-2`}>
                                     {
                                         chat.user === 'teacher' ? (
-                                            <div className="relative text-balance w-auto flex items-center justify-start bg-text py-3 px-6 border border-gray-300 shadow-md shadow-gray-300 rounded-[25px]">
+                                            <div className="relative w-auto flex items-center justify-start bg-text py-3 px-6 border border-gray-300 shadow-md shadow-gray-300 rounded-[25px]">
 
                                                 <p>{chat.text}</p>
                                             </div>
