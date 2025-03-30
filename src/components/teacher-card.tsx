@@ -136,7 +136,7 @@ export default function TeacherCard(): ReactNode {
 
     //* Submit the teacher's first message upon loading the chat
     useEffect(() => {
-        if (chatStream.length === 0) {
+        if (chatStream.length === 0 && isChatOpen) {
             setTimeout(() => {
                 setIsTeacherWriting(true)
                 const id = uuid()
@@ -147,7 +147,7 @@ export default function TeacherCard(): ReactNode {
                 }, 5000)
             }, 5000)
         }
-    }, [])
+    }, [isChatOpen])
 
     //* Effect to manage conditional rendering of the action button, toggle between mic and send message
     useEffect(() => {
