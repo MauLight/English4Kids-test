@@ -26,7 +26,7 @@ export default function TeacherButton({ onClick, lessonStarted }: { onClick: () 
 
     return (
         <AnimatePresence>
-            <motion.div
+            <motion.button
                 variants={containerVariants}
                 initial='initial'
                 whileHover='hover'
@@ -49,7 +49,7 @@ export default function TeacherButton({ onClick, lessonStarted }: { onClick: () 
                         <img style={{ filter: 'invert(100%)' }} className="w-full h-full object-cover" src="https://res.cloudinary.com/maulight/image/upload/v1743239914/ffzeshx0mahdbgg4x5c0.png" alt="doodle" />
                     </motion.div>
                 </motion.div>
-            </motion.div>
+            </motion.button>
         </AnimatePresence>
     )
 }
