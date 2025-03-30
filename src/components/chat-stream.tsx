@@ -17,9 +17,9 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
 
     return (
         <motion.div
-            initial={{ scaleY: 0 }}
-            animate={{ scaleY: 1 }}
-            transition={{ duration: 0.5 }}
+            initial={{ scaleY: 0, opacity: 0 }}
+            animate={{ scaleY: 1, opacity: 1 }}
+            transition={{ duration: 0.6, type: 'spring', bounce: 0.3 }}
             className="relative w-full h-full max-h-[550px]">
 
             <div className="w-full h-full bg-gray-100 border border-slate-200 rounded-[20px] overflow-y-scroll scrollbar-hide">
