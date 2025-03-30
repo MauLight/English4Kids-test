@@ -18,7 +18,7 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
     return (
         <div className="relative w-full h-full max-h-[550px]">
 
-            <div className="w-full h-full bg-gray-200 border border-slate-200 rounded-[20px] overflow-y-scroll scrollbar-hide">
+            <div className="w-full h-full bg-gray-100 border border-slate-200 rounded-[20px] overflow-y-scroll scrollbar-hide">
                 <div className="w-full h-auto flex flex-col gap-y-5 p-2 sm:p-5">
                     {
                         chatStream && chatStream.length > 0 && chatStream.map((chat) => (
@@ -32,26 +32,16 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
                                 <div className={`w-full sm:w-1/2 flex ${chat.user === 'teacher' ? 'justify-start' : 'justify-end'} gap-x-2`}>
                                     {
                                         chat.user === 'teacher' ? (
-                                            <>
-                                                {/* <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden">
-                                                    <img className="w-full h-full object-cover" src="https://res.cloudinary.com/maulight/image/upload/v1743206725/dsnh1fjkctgoneeis60v.png" alt="avatar" />
-                                                </div> */}
-                                                <div className="relative text-balance w-auto flex items-center justify-start bg-text py-3 px-6 border border-gray-300 shadow-md shadow-gray-300 rounded-[25px]">
+                                            <div className="relative text-balance w-auto flex items-center justify-start bg-text py-3 px-6 border border-gray-300 shadow-md shadow-gray-300 rounded-[25px]">
 
-                                                    <p>{chat.text}</p>
-                                                </div>
-                                            </>
+                                                <p>{chat.text}</p>
+                                            </div>
                                         )
                                             :
                                             (
-                                                <>
-                                                    <div className="w-auto flex items-center justify-start py-3 px-6 bg-secondary text-text shadow-md shadow-gray-300 rounded-[25px]">
-                                                        <p>{chat.text}</p>
-                                                    </div>
-                                                    {/* <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden">
-                                                        <img src="https://res.cloudinary.com/maulight/image/upload/v1743230917/cx3q6il3z0e77qq40etx.jpg" alt="" />
-                                                    </div> */}
-                                                </>
+                                                <div className="w-auto flex items-center justify-start py-3 px-6 bg-secondary text-text shadow-md shadow-gray-300 rounded-[25px]">
+                                                    <p>{chat.text}</p>
+                                                </div>
                                             )
                                     }
                                     <div ref={scrollRef}></div>
@@ -63,7 +53,7 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
             </div>
             <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.15 }}
+                animate={{ opacity: 0.08 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="absolute top-0 left-0 w-full h-full z-0">
                 <img className="w-full h-full object-cover" src="https://res.cloudinary.com/maulight/image/upload/v1743239914/ffzeshx0mahdbgg4x5c0.png" alt="" />

@@ -11,6 +11,7 @@ import TeacherInformation from "./teacher-information"
 //* Types
 import { ChatStreamProps } from "@/types"
 import ChatStream from "./chat-stream"
+import { XMarkIcon } from "@heroicons/react/16/solid"
 
 const teacherStream = [
     {
@@ -18,15 +19,15 @@ const teacherStream = [
         user: 'teacher'
     },
     {
-        text: "That's the spirit! Today's lesson will be about professions",
+        text: "That's the spirit! Today's lesson will be about greetings",
         user: 'teacher'
     },
     {
-        text: 'Hello student! Are you ready to start?',
+        text: 'Please, repeat after me. Hello Mr. Sunshine, how are you today?',
         user: 'teacher'
     },
     {
-        text: "That's the spirit! Today's lesson will be about professions",
+        text: "That was fantastic!",
         user: 'teacher'
     },
 ]
@@ -50,6 +51,9 @@ export default function TeacherCard(): ReactNode {
 
     //* Input state
     const [userInput, setUserInput] = useState<string>('')
+    //* Store the recording in state
+    const [audioUrl, setAudioUrl] = useState<string | null>(null)
+
     //* Teacher active state (writing or online)
     const [isTeacherWriting, setIsTeacherWriting] = useState<boolean>(false)
 
@@ -88,12 +92,12 @@ export default function TeacherCard(): ReactNode {
     //* Method to submit reply on enter keydown
     function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
         if (e.key === 'Enter' && userInput.length > 0) {
-            handleInputButton()
+            handleAddMessage()
         }
     }
 
     //* Method to submit a new reply to the chat
-    function handleInputButton() {
+    function handleAddMessage() {
         if (isWriting) {
 
             const id = uuid()
@@ -102,6 +106,21 @@ export default function TeacherCard(): ReactNode {
                 id: `user-${id}`,
                 position: chatPosition,
                 text: userInput,
+                user: 'user'
+            }
+
+            setChatStream((prev) => [...prev, newChatEntry])
+            setChatPosition((prev) => prev + 1)
+            setUserInput('')
+            debouncedTeacherReply()
+        } else if (audioUrl) {
+            //* !isWriting means recording audio, so we check the audioUrl var
+            const id = uuid()
+
+            const newChatEntry = {
+                id: `user-${id}`,
+                position: chatPosition,
+                text: audioUrl,
                 user: 'user'
             }
 
@@ -159,6 +178,14 @@ export default function TeacherCard(): ReactNode {
                     transition={{ duration: 1.5 }}
                     className={`flex flex-col justify-between h-full items-center ${isChatOpen ? 'px-2 sm:px-7' : 'px-7'} py-8`}
                 >
+
+                    {
+                        isChatOpen && (
+                            <button onClick={() => { setIsChatOpen(false) }} className='absolute top-9 right-7 group z-30'>
+                                <XMarkIcon className='w-7 h-7 text-dark hover:text-red-500 group-hover:rotate-45 transition-all duration-300' />
+                            </button>
+                        )
+                    }
                     {/* Header */}
                     {
                         !isChatOpen && (
@@ -190,10 +217,12 @@ export default function TeacherCard(): ReactNode {
                             :
                             (
                                 <ChatInput
+                                    audioUrl={audioUrl}
                                     isWriting={isWriting}
                                     userInput={userInput}
+                                    setAudioUrl={setAudioUrl}
                                     handleKeyDown={handleKeyDown}
-                                    handleInputButton={handleInputButton}
+                                    handleAddMessage={handleAddMessage}
                                     onChange={(e) => { setUserInput(e.target.value) }}
                                 />
                             )

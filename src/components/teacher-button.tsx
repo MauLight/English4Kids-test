@@ -32,10 +32,10 @@ export default function TeacherButton({ onClick }: { onClick: () => void }): Rea
                 whileHover='hover'
                 whileTap='click'
                 onClick={onClick}
-                className="relative group w-full rounded-full py-4 bg-primary hover:border-primary active:border-transparent border flex justify-between px-5 items-center text-black overflow-hidden cursor-pointer z-10"
+                className="relative group w-full rounded-full py-4 bg-secondary hover:border-secondary active:border-transparent border flex justify-between px-5 items-center text-black overflow-hidden cursor-pointer z-10"
             >
-                <p className="text-regular group-hover:text-primary group-active:text-dark transition-color duration-200 ease-out z-20 font-semibold uppercase">Start practicing</p>
-                <ChevronDoubleRightIcon className="w-6 h-6 z-20 group-hover:text-primary group-active:text-dark transition-color duration-200 ease-out" />
+                <p className="text-regular group-hover:text-secondary group-active:text-dark transition-color duration-200 ease-out z-20 font-semibold uppercase">Start practicing</p>
+                <ChevronDoubleRightIcon className="w-6 h-6 z-20 group-hover:text-secondary group-active:text-dark transition-color duration-200 ease-out" />
                 <motion.div
                     className='w-full h-full absolute top-0 left-0 bg-dark rounded-full'
                     variants={childVariants}

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { Dispatch, SetStateAction, useRef, useState } from 'react'
 import { motion } from 'motion/react'
 import { PaperAirplaneIcon, MicrophoneIcon, StopIcon, XMarkIcon } from '@heroicons/react/16/solid'
 
@@ -6,17 +6,21 @@ import { PaperAirplaneIcon, MicrophoneIcon, StopIcon, XMarkIcon } from '@heroico
 interface ChatInputProps {
     isWriting: boolean
     userInput: string
+    audioUrl: string | null
+    setAudioUrl: Dispatch<SetStateAction<string | null>>
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void
-    handleInputButton: () => void
+    handleAddMessage: () => void
 }
 
 export default function ChatInput({
     isWriting,
     userInput,
+    audioUrl,
+    setAudioUrl,
     onChange,
     handleKeyDown,
-    handleInputButton
+    handleAddMessage
 
 }: ChatInputProps) {
 
@@ -26,9 +30,6 @@ export default function ChatInput({
     const [recordingStatus, setRecordingStatus] = useState<'recording' | 'paused' | 'inactive'>('inactive')
     const [audioChunks, setAudioChunks] = useState<Blob[]>([])
     const mediaRecorder = useRef<MediaRecorder | null>(null)
-
-    //* Store the recording in state
-    const [audioUrl, setAudioUrl] = useState<string | null>(null)
 
     async function handleGetMicPermission() {
         if ('MediaRecorder' in window) {
@@ -125,7 +126,7 @@ export default function ChatInput({
 
                 {
                     isWriting ? (
-                        <button onClick={handleInputButton} className="group absolute top-1 right-1 bg-secondary hover:bg-text transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer">
+                        <button onClick={handleAddMessage} className="group absolute top-1 right-1 bg-secondary hover:bg-text transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer">
                             <PaperAirplaneIcon className="w-6 h-6 text-text group-hover:text-secondary transition-color duration-300 -rotate-45" />
                         </button>
                     )
