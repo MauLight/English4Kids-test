@@ -39,9 +39,21 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
                                         )
                                             :
                                             (
-                                                <div className="w-auto flex items-center justify-start py-3 px-6 bg-secondary text-text shadow-md shadow-gray-300 rounded-[25px]">
-                                                    <p>{chat.text}</p>
-                                                </div>
+                                                <>
+                                                    {
+                                                        chat.text.startsWith('blob:') ? (
+                                                            <>
+                                                                <audio className='h-10 border border-gray-300 rounded-full shadow shadow-gray-200' src={chat.text} controls></audio>
+                                                            </>
+                                                        )
+                                                            :
+                                                            (
+                                                                <div className="w-auto flex items-center justify-start py-3 px-6 bg-secondary text-text shadow-md shadow-gray-300 rounded-[25px]">
+                                                                    <p>{chat.text}</p>
+                                                                </div>
+                                                            )
+                                                    }
+                                                </>
                                             )
                                     }
                                     <div ref={scrollRef}></div>
