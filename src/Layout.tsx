@@ -8,7 +8,6 @@ function Layout() {
         <div>
             <Suspense fallback={<Fallback />}>
                 <Home />
-                <Fallback />
             </Suspense>
         </div>
     )
