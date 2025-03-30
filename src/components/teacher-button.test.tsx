@@ -4,6 +4,14 @@ import { describe, it, expect, vi } from 'vitest'
 
 
 describe('TeacherButton Test', () => {
+    it('renders the doodle image with correct alt text and src', () => {
+        const handleClick = vi.fn()
+        render(<TeacherButton onClick={handleClick} lessonStarted={false} />)
+        const image = screen.getByAltText('doodle')
+        expect(image).toBeInTheDocument()
+        expect(image).toHaveAttribute('src', expect.stringContaining('cloudinary'))
+    })
+
     it('renders "Start practicing" when lessonStarted equals false', () => {
         const handleClick = vi.fn()
         render(<TeacherButton onClick={handleClick} lessonStarted={false} />)
@@ -24,22 +32,3 @@ describe('TeacherButton Test', () => {
         expect(handleClick).toHaveBeenCalledTimes(1)
     })
 })
-
-
-
-
-// it('renders the doodle image with correct alt text and src', () => {
-//     const handleClick = vi.fn()
-//     render(<TeacherButton onClick={handleClick} lessonStarted={false} />)
-//     const image = screen.getByAltText('doodle')
-//     expect(image).toBeInTheDocument()
-//     expect(image).toHaveAttribute('src', expect.stringContaining('cloudinary'))
-// })
-
-// it('has the expected button classes', () => {
-//     const handleClick = vi.fn()
-//     render(<TeacherButton onClick={handleClick} lessonStarted={false} />)
-//     const button = screen.getByRole('button')
-//     expect(button).toHaveClass('rounded-full')
-//     expect(button).toHaveClass('bg-secondary')
-// })
