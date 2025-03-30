@@ -169,7 +169,7 @@ export default function TeacherCard(): ReactNode {
                 animate={isChatOpen ? { scale: 1, width: '100%', maxWidth: 900, height: 800, backgroundColor: `${theme === 'light' ? '#fdfcfb' : '#080808'}`, border: `${theme === 'light' ? 'none' : '1px solid #292929'}` } : { scale: 1, width: 'auto', maxWidth: 420, height: 300, backgroundColor: `${theme === 'light' ? '#131212' : '#080808'}`, border: `${theme === 'light' ? 'none' : '1px solid #292929'}` }}
                 exit={{ scale: 0 }}
                 transition={{ duration: 0.3 }}
-                className={`relative h-[300px] max-[500px]:min-w-[90%] ${isChatOpen ? 'rounded-[42px]' : 'rounded-[25px]'} overflow-hidden ${!isChatOpen ? 'max-[500px]:mx-5' : ''} ${theme === 'light' ? 'shadow-xl shadow-yellow-400 border border-b-border border-x-gray-700' : ''}`}>
+                className={`relative h-[300px] max-[500px]:min-w-[90%] ${isChatOpen ? 'rounded-[42px]' : 'rounded-[25px]'} overflow-hidden ${!isChatOpen ? 'max-[500px]:mx-5' : ''} ${theme === 'light' ? 'shadow-xl shadow-yellow-400' : ''}`}>
                 <motion.div
                     key={3}
                     initial={{ opacity: 1 }}
@@ -181,7 +181,7 @@ export default function TeacherCard(): ReactNode {
                     {
                         isChatOpen && (
                             <button onClick={() => { setIsChatOpen(false) }} className='absolute top-9 right-7 group z-30'>
-                                <XMarkIcon className='w-7 h-7 text-dark hover:text-red-500 group-hover:rotate-45 transition-all duration-300' />
+                                <XMarkIcon className={`${theme === 'light' ? 'text-dark' : 'text-border'} w-7 h-7 hover:text-red-500 group-hover:rotate-45 transition-all duration-300`} />
                             </button>
                         )
                     }
