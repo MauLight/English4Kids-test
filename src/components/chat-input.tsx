@@ -109,7 +109,11 @@ export default function ChatInput({
     }
 
     return (
-        <div className='relative w-full'>
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2, delay: 0.5 }}
+            className='relative w-full'>
 
             {
                 audioUrl && (
@@ -159,6 +163,6 @@ export default function ChatInput({
 
                 <input placeholder='Write a message...' onKeyDown={(e) => { handleKeyDown(e) }} value={userInput} onChange={onChange} type="text" className="w-full h-full text-text outline-0 z-20" />
             </div>
-        </div>
+        </motion.div>
     )
 }

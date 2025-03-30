@@ -16,7 +16,11 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
     }, [chatStream])
 
     return (
-        <div className="relative w-full h-full max-h-[550px]">
+        <motion.div
+            initial={{ scaleY: 0 }}
+            animate={{ scaleY: 1 }}
+            transition={{ duration: 0.5 }}
+            className="relative w-full h-full max-h-[550px]">
 
             <div className="w-full h-full bg-gray-100 border border-slate-200 rounded-[20px] overflow-y-scroll scrollbar-hide">
                 <div className="w-full h-auto flex flex-col gap-y-5 p-2 sm:p-5">
@@ -70,6 +74,6 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
                 className="absolute top-0 left-0 w-full h-full z-0">
                 <img className="w-full h-full object-cover" src="https://res.cloudinary.com/maulight/image/upload/v1743239914/ffzeshx0mahdbgg4x5c0.png" alt="" />
             </motion.div>
-        </div>
+        </motion.div>
     )
 }
