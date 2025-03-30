@@ -47,7 +47,10 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
                                                     {
                                                         chat.text.startsWith('blob:') ? (
                                                             <>
-                                                                <audio className='h-10 border border-gray-300 rounded-full shadow shadow-gray-200' src={chat.text} controls></audio>
+                                                                <audio
+                                                                    data-testid="audio-element"
+                                                                    className='h-10 border border-gray-300 rounded-full shadow shadow-gray-200'
+                                                                    src={chat.text} controls></audio>
                                                             </>
                                                         )
                                                             :
