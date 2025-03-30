@@ -158,10 +158,6 @@ export default function TeacherCard(): ReactNode {
 
     }, [userInput])
 
-    useEffect(() => {
-        console.log(chatStream)
-    }, [chatStream])
-
     return (
         <AnimatePresence>
             <motion.section
