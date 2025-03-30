@@ -1,8 +1,11 @@
 import { motion } from "motion/react"
 import { ChatStreamProps } from '@/types'
 import { RefObject, useEffect, useRef } from "react"
+import { useTheme } from "../context/themeContext"
 
 export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps[] }) {
+
+    const { theme } = useTheme()
 
     //* Ref to the placeholder div at the end of the stream
     const scrollRef: RefObject<HTMLDivElement | null> = useRef(null)
@@ -22,7 +25,7 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
             transition={{ duration: 0.6, type: 'spring', bounce: 0.3 }}
             className="relative w-full h-full max-h-[550px]">
 
-            <div className="w-full h-full bg-gray-100 border border-slate-200 rounded-[20px] overflow-y-scroll scrollbar-hide">
+            <div className={`w-full h-full border rounded-[20px] overflow-y-scroll scrollbar-hide ${theme === 'light' ? 'bg-gray-100 border-slate-200' : 'bg-black border-border'}`}>
                 <div className="w-full h-auto flex flex-col gap-y-5 p-2 sm:p-5">
                     {
                         chatStream && chatStream.length > 0 && chatStream.map((chat) => (
@@ -36,7 +39,7 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
                                 <div className={`w-full sm:w-1/2 flex ${chat.user === 'teacher' ? 'justify-start' : 'justify-end'} gap-x-2`}>
                                     {
                                         chat.user === 'teacher' ? (
-                                            <div className="relative w-auto flex items-center justify-start bg-text py-3 px-6 border border-gray-300 shadow-md shadow-gray-300 rounded-[25px]">
+                                            <div className={`relative w-auto flex items-center justify-start py-3 px-6 rounded-[25px] border ${theme === 'light' ? 'bg-text border-gray-300 shadow-md shadow-gray-300' : 'border-border text-text2'}`}>
 
                                                 <p>{chat.text}</p>
                                             </div>
@@ -55,7 +58,7 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
                                                         )
                                                             :
                                                             (
-                                                                <div className="w-auto flex items-center justify-start py-3 px-6 bg-secondary text-text shadow-md shadow-gray-300 rounded-[25px]">
+                                                                <div className={`w-auto flex items-center justify-start py-3 px-6 rounded-[25px] ${theme === 'light' ? 'bg-secondary text-text shadow-md shadow-gray-300' : 'border border-secondary text-secondary'}`}>
                                                                     <p>{chat.text}</p>
                                                                 </div>
                                                             )

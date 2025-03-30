@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useRef, useState } from 'react'
 import { motion } from 'motion/react'
 import { PaperAirplaneIcon, MicrophoneIcon, StopIcon, XMarkIcon, CloudArrowUpIcon } from '@heroicons/react/16/solid'
+import { useTheme } from '../context/themeContext'
 
 
 interface ChatInputProps {
@@ -24,13 +25,20 @@ export default function ChatInput({
 
 }: ChatInputProps) {
 
+    const { theme } = useTheme()
+    const iconClass = `w-7 h-7 group-hover:text-secondary transition-color duration-300 ${theme === 'light' ? 'text-text' : 'text-black'}`
+    const buttonClass = `group absolute top-1 right-1 bg-secondary ${theme === 'light' ? 'hover:bg-text' : 'hover:bg-dark border border-border'} transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer`
+
+    //* Store permission request and stream preparation
     const [permission, setPermission] = useState(false)
     const [stream, setStream] = useState<MediaStream | null>(null)
 
+    //* Audio recording state
     const [recordingStatus, setRecordingStatus] = useState<'recording' | 'paused' | 'inactive'>('inactive')
     const [audioChunks, setAudioChunks] = useState<Blob[]>([])
     const mediaRecorder = useRef<MediaRecorder | null>(null)
 
+    //* Get permissions from browser, start first recording
     async function handleGetMicPermission() {
         if ('MediaRecorder' in window) {
             try {
@@ -66,6 +74,7 @@ export default function ChatInput({
         }
     }
 
+    //* Start a new recording
     function startRecording() {
         if (!permission) {
             handleGetMicPermission()
@@ -90,6 +99,7 @@ export default function ChatInput({
         }
     }
 
+    //* Stop the recording
     function stopRecording() {
         setRecordingStatus('inactive')
         if (mediaRecorder.current) {
@@ -103,6 +113,7 @@ export default function ChatInput({
         }
     }
 
+    //* Add audio blob URL to chat stream
     function handleSendAudio() {
         handleAddMessage()
         setAudioUrl(null)
@@ -133,11 +144,11 @@ export default function ChatInput({
                 )
             }
 
-            <div className="relative w-full rounded-full py-5 px-6 bg-dark">
+            <div className={`relative w-full rounded-full py-5 px-6 bg-dark ${theme === 'light' ? '' : 'border border-border'}`}>
                 {
                     isWriting ? (
-                        <button onClick={handleAddMessage} data-testid="send-button" className="group absolute top-1 right-1 bg-secondary hover:bg-text transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer">
-                            <PaperAirplaneIcon className="w-6 h-6 text-text group-hover:text-secondary transition-color duration-300 -rotate-45" />
+                        <button onClick={handleAddMessage} data-testid="send-button" className={buttonClass}>
+                            <PaperAirplaneIcon className={iconClass + ' -rotate-45'} />
                         </button>
                     )
                         :
@@ -145,14 +156,14 @@ export default function ChatInput({
                             <>
                                 {
                                     recordingStatus === 'recording' ? (
-                                        <button onClick={stopRecording} data-testid="stop-recording-button" className="group absolute top-1 right-1 bg-secondary hover:bg-text transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer">
-                                            <StopIcon className="w-7 h-7 text-text group-hover:text-secondary transition-color duration-300" />
+                                        <button onClick={stopRecording} data-testid="stop-recording-button" className={buttonClass}>
+                                            <StopIcon className={iconClass} />
                                         </button>
                                     )
                                         :
                                         (
-                                            <button onClick={startRecording} data-testid="start-recording-button" className="group absolute top-1 right-1 bg-secondary hover:bg-text transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer">
-                                                <MicrophoneIcon className="w-7 h-7 text-text group-hover:text-secondary transition-color duration-300" />
+                                            <button onClick={startRecording} data-testid="start-recording-button" className={buttonClass}>
+                                                <MicrophoneIcon className={iconClass} />
                                             </button>
                                         )
                                 }

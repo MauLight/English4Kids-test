@@ -1,6 +1,7 @@
 import { type ReactNode } from "react"
 import { motion } from "motion/react"
 import { format } from "date-fns"
+import { useTheme } from "../context/themeContext"
 
 interface TeacherInformationProps {
     text: Record<string, string>
@@ -9,6 +10,9 @@ interface TeacherInformationProps {
 }
 
 export default function TeacherInformation({ text, isChatOpen, isTeacherWriting }: TeacherInformationProps): ReactNode {
+
+    const { theme } = useTheme()
+
     return (
         <>
             {
@@ -43,12 +47,12 @@ export default function TeacherInformation({ text, isChatOpen, isTeacherWriting 
                                     alt="avatar"
                                 />
                                 <div>
-                                    <p className={`${isChatOpen ? 'text-dark' : 'text-text'} text-[1.4rem] leading-5`}>{text.second}</p>
+                                    <p className={`${isChatOpen ? theme === 'light' ? 'text-dark' : 'text-text' : 'text-text'} text-[1.4rem] leading-5`}>{text.second}</p>
                                     <div className="flex gap-x-2 items-center">
                                         {
                                             isTeacherWriting ? (
                                                 <>
-                                                    <p className="text-dark2 text-regular animate-pulse">{`${text.fifth}`}</p>
+                                                    <p className={`${theme === 'light' ? 'text-dark2' : 'text-text2'} text-regular animate-pulse`}>{`${text.fifth}`}</p>
                                                 </>
                                             )
                                                 :
