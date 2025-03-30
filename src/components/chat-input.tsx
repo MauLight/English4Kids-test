@@ -122,22 +122,21 @@ export default function ChatInput({
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, type: 'spring', bounce: 0.2 }}
                         className="absolute -top-17 right-0 z-20 py-3 flex justify-end">
-                        <button onClick={handleSendAudio} className='absolute top-3 -left-15 z-30 h-10 px-4 bg-gray-100 hover:bg-green-500 transition-color duration-300 border border-gray-300 rounded-full'>
+                        <button onClick={handleSendAudio} data-testid="send-audio-button" className='absolute top-3 -left-15 z-30 h-10 px-4 bg-gray-100 hover:bg-green-500 transition-color duration-300 border border-gray-300 rounded-full'>
                             <CloudArrowUpIcon className='w-5 h-5 text-dark' />
                         </button>
-                        <button onClick={() => { setAudioUrl(null) }} className='absolute top-1 -right-1 z-30'>
+                        <button onClick={() => { setAudioUrl(null) }} data-testid="clear-audio-button" className='absolute top-1 -right-1 z-30'>
                             <XMarkIcon className='w-5 h-5 text-dark hover:text-red-500' />
                         </button>
-                        <audio className='h-10 border border-gray-300 rounded-full shadow shadow-gray-200' src={audioUrl} controls></audio>
+                        <audio data-testid="audio-element" className='h-10 border border-gray-300 rounded-full shadow shadow-gray-200' src={audioUrl} controls></audio>
                     </motion.div>
                 )
             }
 
             <div className="relative w-full rounded-full py-5 px-6 bg-dark">
-
                 {
                     isWriting ? (
-                        <button onClick={handleAddMessage} className="group absolute top-1 right-1 bg-secondary hover:bg-text transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer">
+                        <button onClick={handleAddMessage} data-testid="send-button" className="group absolute top-1 right-1 bg-secondary hover:bg-text transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer">
                             <PaperAirplaneIcon className="w-6 h-6 text-text group-hover:text-secondary transition-color duration-300 -rotate-45" />
                         </button>
                     )
@@ -146,13 +145,13 @@ export default function ChatInput({
                             <>
                                 {
                                     recordingStatus === 'recording' ? (
-                                        <button onClick={stopRecording} className="group absolute top-1 right-1 bg-secondary hover:bg-text transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer">
+                                        <button onClick={stopRecording} data-testid="stop-recording-button" className="group absolute top-1 right-1 bg-secondary hover:bg-text transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer">
                                             <StopIcon className="w-7 h-7 text-text group-hover:text-secondary transition-color duration-300" />
                                         </button>
                                     )
                                         :
                                         (
-                                            <button onClick={startRecording} className="group absolute top-1 right-1 bg-secondary hover:bg-text transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer">
+                                            <button onClick={startRecording} data-testid="start-recording-button" className="group absolute top-1 right-1 bg-secondary hover:bg-text transition-color duration-300 w-[56px] h-[56px] flex justify-center items-center rounded-full cursor-pointer">
                                                 <MicrophoneIcon className="w-7 h-7 text-text group-hover:text-secondary transition-color duration-300" />
                                             </button>
                                         )
