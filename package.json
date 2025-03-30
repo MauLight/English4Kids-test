@@ -6,10 +6,10 @@
   "description": "This boilerplate offers a starting point for Symetria projects.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MauLight/symetria-template.git"
+    "url": "https://github.com/e4ai-sebcantini/boot-project-mau.git"
   },
   "author": {
-    "name": "Symetria"
+    "name": "Mau Ulisse Luz"
   },
   "license": "MIT",
   "scripts": {
@@ -18,9 +18,6 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest"
-  },
-  "bin": {
-    "symetria": "./symetria.js"
   },
   "dependencies": {
     "@axe-core/react": "^4.10.1",
