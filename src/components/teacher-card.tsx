@@ -151,7 +151,7 @@ export default function TeacherCard(): ReactNode {
                 animate={isChatOpen ? { scale: 1, width: '100%', maxWidth: 900, height: 800, backgroundColor: '#fdfcfb' } : { scale: 1, width: 'auto', maxWidth: 420, height: 300, backgroundColor: '#131212' }}
                 exit={{ scale: 0 }}
                 transition={{ duration: 0.5 }}
-                className={`relative shadow-xl shadow-yellow-400 border h-[300px] max-[500px]:min-w-[90%] border-b-border border-x-gray-700 rounded-[25px] overflow-hidden ${!isChatOpen ? 'max-[500px]:mx-5' : ''}`}>
+                className={`relative shadow-xl shadow-yellow-400 border h-[300px] max-[500px]:min-w-[90%] border-b-border border-x-gray-700 ${isChatOpen ? 'rounded-[42px]' : 'rounded-[25px]'} overflow-hidden ${!isChatOpen ? 'max-[500px]:mx-5' : ''}`}>
                 <motion.div
                     key={3}
                     initial={{ opacity: 1 }}
