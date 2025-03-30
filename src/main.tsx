@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import App from './App.tsx'
 import './index.css'
 
+//* Import accesibility checks
 if (import.meta.env.DEV) {
   const axe = await import('@axe-core/react')
   axe.default(React, ReactDOM, 1000)
