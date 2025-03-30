@@ -5,7 +5,7 @@ import { RefObject, useEffect, useRef } from "react"
 export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps[] }) {
 
     //* Ref to the placeholder div at the end of the stream
-    const scrollRef: RefObject<HTMLDivElement> = useRef(null)
+    const scrollRef: RefObject<HTMLDivElement | null> = useRef(null)
 
     //* Effect to scroll to the last div on the stream when chatStream gets updated
     useEffect(() => {
@@ -47,7 +47,10 @@ export default function ChatStream({ chatStream }: { chatStream: ChatStreamProps
                                                     {
                                                         chat.text.startsWith('blob:') ? (
                                                             <>
-                                                                <audio className='h-10 border border-gray-300 rounded-full shadow shadow-gray-200' src={chat.text} controls></audio>
+                                                                <audio
+                                                                    data-testid="audio-element"
+                                                                    className='h-10 border border-gray-300 rounded-full shadow shadow-gray-200'
+                                                                    src={chat.text} controls></audio>
                                                             </>
                                                         )
                                                             :
