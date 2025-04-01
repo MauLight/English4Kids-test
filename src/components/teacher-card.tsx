@@ -165,7 +165,7 @@ export default function TeacherCard(): ReactNode {
         <AnimatePresence>
             <motion.section
                 key={1}
-                initial={{ scale: 1, width: 'auto', maxWidth: 420, height: 300, backgroundColor: '#131212' }}
+                initial={{ scale: 1, width: 'auto', maxWidth: 420, height: 300, backgroundColor: '#131212', border: 'none' }}
                 animate={isChatOpen ? { scale: 1, width: '100%', maxWidth: 900, height: 800, backgroundColor: `${theme === 'light' ? '#fdfcfb' : '#080808'}`, border: `${theme === 'light' ? 'none' : '1px solid #292929'}` } : { scale: 1, width: 'auto', maxWidth: 420, height: 300, backgroundColor: `${theme === 'light' ? '#131212' : '#080808'}`, border: `${theme === 'light' ? 'none' : '1px solid #292929'}` }}
                 exit={{ scale: 0 }}
                 transition={{ duration: 0.3 }}
@@ -188,7 +188,7 @@ export default function TeacherCard(): ReactNode {
                     {/* Header */}
                     {
                         !isChatOpen && (
-                            <h1 className={`font-title text-start w-full min-[360px]:min-w-[360px] text-text text-header z-10`}>{text.first}</h1>
+                            <h1 data-testid="card-header" className={`font-title text-start w-full min-[360px]:min-w-[360px] text-text text-header z-10`}>{text.first}</h1>
                         )
                     }
 

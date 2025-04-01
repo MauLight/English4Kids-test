@@ -1,16 +1,21 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import TeacherCard from './teacher-card'
 import { describe, it, expect } from 'vitest'
+import { ThemeProvider } from '../context/themeContext'
+
+const renderWithTheme = (ui: React.ReactElement) => {
+    return render(<ThemeProvider>{ui}</ThemeProvider>)
+}
 
 describe('TeacherCard Component', () => {
     it('renders the closed teacher card with header', () => {
-        render(<TeacherCard />)
-        const headerElement = screen.getByText('Welcome!')
+        renderWithTheme(<TeacherCard />)
+        const headerElement = screen.getByTestId('card-header')
         expect(headerElement).toBeInTheDocument()
     })
 
     it('opens the chat when teacher button is clicked', async () => {
-        render(<TeacherCard />)
+        renderWithTheme(<TeacherCard />)
         const teacherButton = screen.getByRole('button')
         fireEvent.click(teacherButton)
 
@@ -19,7 +24,7 @@ describe('TeacherCard Component', () => {
     })
 
     it('renders teacher information in the open chat state', async () => {
-        render(<TeacherCard />)
+        renderWithTheme(<TeacherCard />)
         const teacherButton = screen.getByRole('button')
         fireEvent.click(teacherButton)
 

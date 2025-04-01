@@ -1,6 +1,12 @@
 import { render, screen } from '@testing-library/react'
 import TeacherInformation from './teacher-information'
 import { describe, it, expect } from 'vitest'
+import { ThemeProvider } from '../context/themeContext'
+
+const renderWithTheme = (ui: React.ReactElement) => {
+    return render(<ThemeProvider>{ui}</ThemeProvider>)
+}
+
 
 const defaultText = {
     second: 'Teacher Name',
@@ -11,7 +17,7 @@ const defaultText = {
 
 describe('TeacherInformation Component', () => {
     it('renders correctly when chat is closed', () => {
-        render(
+        renderWithTheme(
             <TeacherInformation
                 text={defaultText}
                 isChatOpen={false}
@@ -32,7 +38,7 @@ describe('TeacherInformation Component', () => {
     })
 
     it('renders open chat with teacher writing indicator when teacher is writing', () => {
-        render(
+        renderWithTheme(
             <TeacherInformation
                 text={defaultText}
                 isChatOpen={true}
@@ -51,7 +57,7 @@ describe('TeacherInformation Component', () => {
     })
 
     it('renders open chat with teacher online indicator when teacher is not writing', () => {
-        render(
+        renderWithTheme(
             <TeacherInformation
                 text={defaultText}
                 isChatOpen={true}
